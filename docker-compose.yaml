@@ -23,9 +23,8 @@ services:
       - "8080:80"
     depends_on:
       - symfony_app
-    environment:
-      NGINX_FPM_HOST: symfony_app
-      NGINX_ROOT: /var/www/html/public
+    volumes:
+      - ./public:/var/www/html/public
 
   symfony_redis:
     container_name: symfony_redis
@@ -42,10 +41,10 @@ services:
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_DB: database
+      POSTGRES_DB: symfony1
       # You should definitely change the password in production
       POSTGRES_PASSWORD: password
-      POSTGRES_USER: user1
+      POSTGRES_USER: user
     volumes:
       - db-data:/var/lib/postgresql/data:rw
       # You may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
