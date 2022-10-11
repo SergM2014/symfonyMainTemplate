@@ -40,11 +40,17 @@ RUN apt-get update \
         pgsql \
         pcntl \
         zip \
-    && docker-php-ext-enable redis \
+    && docker-php-ext-enable redis \                      
     && rm -rf /var/lib/apt/lists/*;
 
 RUN pecl install xdebug \
     && docker-php-ext-enable xdebug
+
+ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
+
+RUN chmod +x /usr/local/bin/install-php-extensions && sync && \
+    install-php-extensions amqp
+
 # This needs in order to run xdebug from PhpStorm
 ENV PHP_IDE_CONFIG 'serverName=DockerApp'
 
