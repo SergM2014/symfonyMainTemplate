@@ -30,6 +30,7 @@ RUN apt-get update \
     && pecl install redis \
     && docker-php-ext-configure gd \
     && docker-php-ext-configure zip \
+    && docker-php-ext-install sockets \
     && docker-php-ext-install \
         gd \
         exif \
