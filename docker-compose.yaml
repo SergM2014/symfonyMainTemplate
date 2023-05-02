@@ -57,6 +57,13 @@ services:
     ports: [1025, 1080]
 ###< symfony/mailer ###
 
+  symfony_rabbitmq:
+    container_name: symfony_rabbitmq
+    image: rabbitmq:3.9-management
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+
 volumes:
   storeredis:
     driver: local
