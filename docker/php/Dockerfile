@@ -8,12 +8,12 @@ RUN curl -s -f -L -o /tmp/dockerize.tar.gz https://github.com/jwilder/dockerize/
     && rm /tmp/dockerize.tar.gz
 
 # Install Composer
-ENV COMPOSER_VERSION 2.1.5
+ENV COMPOSER_VERSION 2.5.5
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer --version=$COMPOSER_VERSION
 
 # Install nodejs
-RUN curl -sL https://deb.nodesource.com/setup_16.x | bash
+RUN curl -sL https://deb.nodesource.com/setup_18.x | bash
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
@@ -26,6 +26,9 @@ RUN apt-get update \
         unzip \
         zip \
         nodejs \
+        #libicu-dev \
+        #&& docker-php-ext-configure intl \
+        #&& docker-php-ext-install intl \
     && apt-get clean \
     && pecl install redis \
     && docker-php-ext-configure gd \
@@ -43,13 +46,13 @@ RUN apt-get update \
     && docker-php-ext-enable redis \                      
     && rm -rf /var/lib/apt/lists/*;
 
-RUN pecl install xdebug \
-    && docker-php-ext-enable xdebug
-
+#RUN pecl install xdebug \
+#   && docker-php-ext-enable xdebug 
+   
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
 
 RUN chmod +x /usr/local/bin/install-php-extensions && sync && \
-    install-php-extensions amqp
+    install-php-extensions amqp intl xdebug
 
 # This needs in order to run xdebug from PhpStorm
 ENV PHP_IDE_CONFIG 'serverName=DockerApp'
