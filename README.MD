@@ -1,4 +1,5 @@
-it is a blank of dockerized Symfony. nginx and Postgresql are included
+it is a main blank of dockerized Symfony. nginx and Postgresql are included
+
 Xdebug is also enabled
 
 1. $ docker-compose up -d
